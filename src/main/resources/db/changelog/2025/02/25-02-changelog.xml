@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1740490614563-1" author="livevasiliy">
+        <createTable tableName="comment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_comment"/>
+            </column>
+            <column name="text" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1740490614563-2" author="livevasiliy">
+        <createTable tableName="task">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_task"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="assignee_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1740490614563-3" author="livevasiliy">
+        <addForeignKeyConstraint baseColumnNames="task_id" baseTableName="comment" constraintName="FK_COMMENT_ON_TASK"
+                                 referencedColumnNames="id" referencedTableName="task"/>
+    </changeSet>
+    <changeSet id="1740490614563-4" author="livevasiliy">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="comment" constraintName="FK_COMMENT_ON_USER"
+                                 referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+    <changeSet id="1740490614563-5" author="livevasiliy">
+        <addForeignKeyConstraint baseColumnNames="assignee_id" baseTableName="task" constraintName="FK_TASK_ON_ASSIGNEE"
+                                 referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+    <changeSet id="1740490614563-6" author="livevasiliy">
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="task" constraintName="FK_TASK_ON_AUTHOR"
+                                 referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+
+</databaseChangeLog>
